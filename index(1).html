@@ -1,0 +1,1030 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Dik's Cafe – Coffee & Live Space | Wamena</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Outfit:wght@300;400;500;600;700&family=Dancing+Script:wght@700&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --espresso:#1a0a00;--roast:#2e1503;--caramel:#c2722a;--gold:#e8a84c;
+  --cream:#f5e6c8;--ivory:#fdf7ee;--red:#c0392b;--warm-white:#fffaf3;
+  --mid:#5c3a1e;--light:#9e7048;--green:#27ae60;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Outfit',sans-serif;background:var(--warm-white);color:var(--espresso);overflow-x:hidden}
+
+/* ══════════ LOGIN OVERLAY ══════════ */
+#login-overlay{
+  position:fixed;inset:0;z-index:9999;
+  background:rgba(26,10,0,.95);
+  display:flex;align-items:center;justify-content:center;
+  backdrop-filter:blur(10px);
+}
+.login-box{
+  background:var(--ivory);border-radius:24px;padding:50px 44px 44px;
+  width:100%;max-width:450px;box-shadow:0 40px 100px rgba(0,0,0,.6);
+  text-align:center;animation:popIn .5s cubic-bezier(.175,.885,.32,1.275);
+}
+@keyframes popIn{from{transform:scale(.85);opacity:0}to{transform:scale(1);opacity:1}}
+.login-logo-img{width:100px;height:100px;margin:0 auto 10px;display:block}
+.login-logo{font-family:'Dancing Script',cursive;font-size:3rem;color:var(--red);margin-bottom:4px}
+.login-sub{font-size:.78rem;letter-spacing:2.5px;text-transform:uppercase;color:var(--light);margin-bottom:28px}
+.login-box h2{font-family:'Playfair Display',serif;font-size:1.5rem;color:var(--espresso);margin-bottom:22px}
+.fg{margin-bottom:16px;text-align:left}
+.fg label{display:block;font-size:.78rem;font-weight:700;color:var(--mid);margin-bottom:6px;letter-spacing:.8px;text-transform:uppercase}
+.fg input{
+  width:100%;padding:13px 16px;border:1.5px solid #e0d5c5;border-radius:10px;
+  font-family:'Outfit',sans-serif;font-size:.95rem;background:#fff;color:var(--espresso);
+  outline:none;transition:border .2s,box-shadow .2s;
+}
+.fg input:focus{border-color:var(--caramel);box-shadow:0 0 0 3px rgba(194,114,42,.15)}
+.btn-login{
+  width:100%;padding:14px;background:var(--red);color:#fff;border:none;border-radius:10px;
+  font-family:'Outfit',sans-serif;font-size:1rem;font-weight:700;cursor:pointer;
+  letter-spacing:1px;text-transform:uppercase;transition:all .25s;margin-top:4px;
+}
+.btn-login:hover{background:#a93226;transform:translateY(-1px);box-shadow:0 8px 24px rgba(192,57,43,.35)}
+.guest-btn{
+  margin-top:12px;width:100%;padding:12px;background:transparent;
+  border:1.5px solid var(--caramel);color:var(--caramel);border-radius:10px;
+  font-family:'Outfit',sans-serif;font-size:.9rem;font-weight:600;cursor:pointer;transition:all .25s;
+}
+.guest-btn:hover{background:var(--caramel);color:#fff}
+.login-hint{margin-top:14px;font-size:.82rem;color:var(--light)}
+.login-hint b{color:var(--caramel);font-weight:700}
+
+/* ══════════ NAV ══════════ */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:200;height:70px;
+  padding:0 6%;display:flex;align-items:center;justify-content:space-between;
+  background:rgba(26,10,0,.95);backdrop-filter:blur(14px);
+  border-bottom:1px solid rgba(232,168,76,.12);transition:all .3s;
+}
+.nav-brand{display:flex;align-items:center;gap:12px;text-decoration:none}
+.nav-logo{width:50px;height:50px;object-fit:contain}
+.nav-brand-text{font-family:'Dancing Script',cursive;font-size:2rem;color:var(--red)}
+.nav-links{display:flex;gap:28px;list-style:none}
+.nav-links a{color:var(--cream);text-decoration:none;font-size:.88rem;font-weight:500;transition:color .2s}
+.nav-links a:hover{color:var(--gold)}
+.nav-right{display:flex;gap:12px;align-items:center}
+.nav-cta{
+  padding:9px 22px;background:var(--red);color:#fff;border-radius:25px;
+  text-decoration:none;font-size:.85rem;font-weight:700;letter-spacing:.5px;transition:all .25s;
+}
+.nav-cta:hover{background:var(--caramel);transform:translateY(-1px)}
+.admin-btn{
+  padding:9px 18px;background:rgba(232,168,76,.15);color:var(--gold);
+  border:1px solid rgba(232,168,76,.3);border-radius:25px;text-decoration:none;
+  font-size:.82rem;font-weight:600;cursor:pointer;transition:all .25s;
+}
+.admin-btn:hover{background:var(--gold);color:var(--espresso)}
+#admin-btn-nav{display:none}
+
+/* ══════════ HERO ══════════ */
+#hero{
+  min-height:100vh;background:linear-gradient(145deg,#1a0a00 0%,#2e1503 45%,#1a0a00 100%);
+  display:flex;align-items:center;position:relative;overflow:hidden;padding:100px 8% 60px;
+}
+.hero-bg{
+  position:absolute;inset:0;
+  background:radial-gradient(ellipse at 70% 50%,rgba(194,114,42,.1) 0%,transparent 70%),
+    radial-gradient(ellipse at 20% 80%,rgba(232,168,76,.06) 0%,transparent 60%);
+}
+.hero-content{position:relative;z-index:2;max-width:640px}
+.hero-badge{
+  display:inline-flex;align-items:center;gap:8px;
+  background:rgba(232,168,76,.1);border:1px solid rgba(232,168,76,.28);
+  padding:8px 20px;border-radius:30px;margin-bottom:26px;
+  font-size:.78rem;letter-spacing:2px;text-transform:uppercase;color:var(--gold);
+}
+.hero-title{
+  font-family:'Playfair Display',serif;font-size:clamp(2.8rem,6vw,5rem);
+  line-height:1.08;color:var(--cream);margin-bottom:18px;
+}
+.hero-title em{font-style:italic;color:var(--gold)}
+.hero-desc{font-size:1.05rem;color:rgba(245,230,200,.7);line-height:1.85;margin-bottom:34px;font-weight:300}
+.hero-actions{display:flex;gap:14px;flex-wrap:wrap}
+.btn-primary{
+  padding:15px 34px;background:var(--red);color:#fff;text-decoration:none;
+  border-radius:50px;font-weight:700;font-size:.92rem;transition:all .3s;display:inline-block;
+}
+.btn-primary:hover{background:#a93226;transform:translateY(-2px);box-shadow:0 12px 30px rgba(192,57,43,.35)}
+.btn-sec{
+  padding:15px 34px;background:transparent;color:var(--cream);text-decoration:none;
+  border-radius:50px;font-weight:500;font-size:.92rem;border:1.5px solid rgba(245,230,200,.3);
+  transition:all .3s;display:inline-block;
+}
+.btn-sec:hover{border-color:var(--gold);color:var(--gold)}
+.hero-stats{display:flex;gap:40px;margin-top:56px}
+.hstat h3{font-family:'Playfair Display',serif;font-size:2.2rem;color:var(--gold)}
+.hstat p{font-size:.75rem;color:rgba(245,230,200,.5);letter-spacing:1.5px;text-transform:uppercase}
+.live-pulse{
+  position:absolute;right:8%;top:50%;transform:translateY(-50%);z-index:2;
+  width:300px;background:rgba(255,255,255,.05);border:1px solid rgba(232,168,76,.2);
+  border-radius:22px;padding:30px 26px;backdrop-filter:blur(20px);
+}
+.lp-label{font-size:.72rem;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:6px}
+.lp-name{font-family:'Playfair Display',serif;font-size:1.2rem;color:var(--cream);margin-bottom:4px}
+.lp-sub{font-size:.82rem;color:rgba(245,230,200,.5);margin-bottom:18px}
+.wave{display:flex;gap:5px;margin-bottom:20px}
+.wave span{height:28px;width:5px;border-radius:3px;background:linear-gradient(to top,var(--caramel),var(--gold));animation:wv 1.4s ease-in-out infinite}
+.wave span:nth-child(2){animation-delay:.2s;height:18px}.wave span:nth-child(3){animation-delay:.4s;height:34px}
+.wave span:nth-child(4){animation-delay:.6s;height:16px}.wave span:nth-child(5){animation-delay:.8s;height:24px}
+@keyframes wv{0%,100%{transform:scaleY(1)}50%{transform:scaleY(.5)}}
+.live-tag{display:inline-flex;align-items:center;gap:6px;background:rgba(192,57,43,.2);border:1px solid rgba(192,57,43,.35);padding:5px 12px;border-radius:20px;font-size:.75rem;color:#ff7675}
+.ldot{width:7px;height:7px;border-radius:50%;background:#ff7675;animation:pulse 1.5s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+
+/* ══════════ SECTIONS ══════════ */
+section{padding:88px 8%}
+.stag{font-size:.75rem;letter-spacing:3px;text-transform:uppercase;color:var(--caramel);font-weight:700;margin-bottom:10px}
+.stitle{font-family:'Playfair Display',serif;font-size:clamp(1.9rem,3.5vw,2.8rem);color:var(--espresso);line-height:1.18}
+.stitle em{font-style:italic;color:var(--caramel)}
+.sdesc{font-size:.97rem;color:var(--mid);line-height:1.9;max-width:580px;margin-top:12px;font-weight:300}
+
+/* ══════════ ABOUT ══════════ */
+#about{background:var(--espresso);display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:center}
+#about .stitle{color:var(--cream)}
+#about .stag{color:var(--gold)}
+#about .sdesc{color:rgba(245,230,200,.62)}
+.feat-pills{display:flex;gap:12px;flex-wrap:wrap;margin-top:26px}
+.fpill{display:flex;align-items:center;gap:7px;background:rgba(232,168,76,.08);border:1px solid rgba(232,168,76,.22);padding:7px 15px;border-radius:30px;font-size:.8rem;color:var(--gold)}
+.info-card{background:linear-gradient(135deg,#2e1503,#3d1f07);border:1px solid rgba(232,168,76,.18);border-radius:20px;padding:32px;position:relative}
+.since-badge{position:absolute;top:-18px;right:-18px;background:var(--red);color:#fff;border-radius:50%;width:82px;height:82px;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:.65rem;text-transform:uppercase;font-weight:700;line-height:1.4;box-shadow:0 8px 24px rgba(192,57,43,.4)}
+.since-badge strong{font-size:1.3rem}
+.loc{display:flex;gap:12px;align-items:flex-start;margin-bottom:22px}
+.loc-t p:first-child{font-weight:700;color:var(--gold);font-size:.88rem}
+.loc-t p:last-child{color:rgba(245,230,200,.58);font-size:.83rem;line-height:1.6}
+.jhdr{font-family:'Playfair Display',serif;color:var(--gold);font-size:.95rem;margin-bottom:12px}
+.jrow{display:flex;justify-content:space-between;padding:9px 0;border-bottom:1px solid rgba(232,168,76,.1);font-size:.83rem}
+.jrow:last-child{border-bottom:none}
+.jrow span:first-child{color:rgba(245,230,200,.6)}
+.jrow span:last-child{color:var(--gold);font-weight:700}
+
+/* ══════════ MENU BOOK ══════════ */
+#menu{background:var(--ivory)}
+.menu-top{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:44px;flex-wrap:wrap;gap:18px}
+.tabs{display:flex;gap:8px;flex-wrap:wrap}
+.tab{padding:9px 20px;border-radius:30px;cursor:pointer;font-family:'Outfit',sans-serif;font-size:.85rem;font-weight:600;border:1.5px solid #ddd;background:transparent;color:var(--mid);transition:all .25s}
+.tab.on,.tab:hover{background:var(--red);color:#fff;border-color:var(--red)}
+.menu-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:24px}
+.msec{display:none}
+.msec.on{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:24px}
+.mcard{background:#fff;border-radius:18px;overflow:hidden;box-shadow:0 4px 18px rgba(0,0,0,.07);transition:all .3s;cursor:pointer}
+.mcard:hover{transform:translateY(-6px);box-shadow:0 16px 40px rgba(0,0,0,.13)}
+.mimg{
+  height:185px;display:flex;align-items:center;justify-content:center;
+  font-size:4rem;position:relative;overflow:hidden;background:#f5f0ea;
+}
+.mimg img{width:100%;height:100%;object-fit:cover;position:absolute;inset:0}
+.mimg .emoji-fallback{position:relative;z-index:1;font-size:4rem}
+.mbadge{position:absolute;top:10px;right:10px;background:var(--red);color:#fff;padding:4px 11px;border-radius:20px;font-size:.7rem;font-weight:700;letter-spacing:.8px;z-index:2}
+.mbody{padding:18px 20px 20px}
+.mbody h3{font-family:'Playfair Display',serif;font-size:1.1rem;color:var(--espresso);margin-bottom:5px}
+.mbody p{font-size:.82rem;color:var(--light);line-height:1.6;margin-bottom:14px;min-height:40px}
+.mfoot{display:flex;justify-content:space-between;align-items:center}
+.mprice{font-family:'Playfair Display',serif;font-size:1.15rem;color:var(--caramel);font-weight:900}
+.border{padding:7px 16px;background:var(--espresso);color:#fff;border:none;border-radius:20px;font-size:.78rem;font-weight:700;cursor:pointer;transition:background .25s;font-family:'Outfit',sans-serif}
+.border:hover{background:var(--red)}
+
+/* ══════════ LIVE MUSIC ══════════ */
+#live{background:linear-gradient(160deg,#1a0a00 0%,#2e1503 100%);color:var(--cream);text-align:center}
+#live .stag{color:var(--gold)}
+#live .stitle{color:var(--cream)}
+.sched{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:18px;margin-top:46px}
+.sday{background:rgba(255,255,255,.05);border:1px solid rgba(232,168,76,.15);border-radius:16px;padding:24px 18px;text-align:center;transition:all .3s}
+.sday:hover,.sday.hi{background:rgba(232,168,76,.08);border-color:var(--gold)}
+.sday.sp{background:rgba(192,57,43,.12);border-color:var(--red)}
+.dn{font-family:'Playfair Display',serif;font-size:1.05rem;color:var(--gold);margin:10px 0 8px}
+.de{font-size:.82rem;color:rgba(245,230,200,.65);line-height:1.7}
+.djbadge{display:inline-block;margin-top:10px;background:var(--red);color:#fff;padding:3px 12px;border-radius:20px;font-size:.72rem;font-weight:700;letter-spacing:1px}
+
+/* ══════════ BOOKING ══════════ */
+#booking{background:var(--espresso);color:var(--cream);text-align:center}
+#booking .stitle{color:var(--cream)}
+#booking .stag{color:var(--gold)}
+#booking .sdesc{color:rgba(245,230,200,.6);margin:12px auto 36px}
+.bform{max-width:620px;margin:0 auto;background:rgba(255,255,255,.05);border:1px solid rgba(232,168,76,.18);border-radius:22px;padding:40px 36px;text-align:left}
+.frow{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.bform .fg{margin-bottom:16px}
+.bform .fg label{color:rgba(245,230,200,.75);font-size:.78rem;letter-spacing:1px;text-transform:uppercase;display:block;margin-bottom:7px;font-weight:700}
+.bform input,.bform select,.bform textarea{
+  width:100%;padding:12px 16px;background:rgba(255,255,255,.07);border:1px solid rgba(232,168,76,.18);
+  border-radius:10px;color:var(--cream);font-family:'Outfit',sans-serif;font-size:.92rem;outline:none;transition:border .2s;
+}
+.bform input:focus,.bform select:focus,.bform textarea:focus{border-color:var(--gold)}
+.bform select option{background:var(--espresso);color:var(--cream)}
+.bform textarea{resize:vertical;min-height:90px}
+.btn-book{width:100%;padding:15px;background:var(--red);color:#fff;border:none;border-radius:12px;font-family:'Outfit',sans-serif;font-size:.98rem;font-weight:700;cursor:pointer;letter-spacing:1px;text-transform:uppercase;transition:all .25s;margin-top:4px}
+.btn-book:hover{background:var(--caramel);transform:translateY(-1px)}
+
+/* ══════════ FOOTER ══════════ */
+footer{background:#0d0400;color:rgba(245,230,200,.45);padding:56px 8% 28px}
+.fg-grid{display:grid;grid-template-columns:2fr 1fr 1fr;gap:48px;margin-bottom:36px}
+.fb{font-family:'Dancing Script',cursive;font-size:2.3rem;color:var(--red);margin-bottom:10px}
+.ftag{font-size:.85rem;color:rgba(245,230,200,.45);line-height:1.85;max-width:270px}
+.fc h4{font-family:'Playfair Display',serif;color:var(--gold);margin-bottom:16px;font-size:.97rem}
+.fc ul{list-style:none}
+.fc ul li{margin-bottom:9px}
+.fc ul li a{color:rgba(245,230,200,.45);text-decoration:none;font-size:.85rem;transition:color .2s}
+.fc ul li a:hover{color:var(--gold)}
+.fbot{border-top:1px solid rgba(255,255,255,.06);padding-top:22px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;font-size:.8rem}
+.socials{display:flex;gap:12px}
+.soc{width:38px;height:38px;border-radius:50%;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;text-decoration:none;color:var(--cream);transition:all .25s;font-size:.95rem}
+.soc:hover{background:var(--red);border-color:var(--red)}
+
+/* ══════════ ADMIN PANEL ══════════ */
+#admin-panel{
+  display:none;position:fixed;inset:0;z-index:5000;
+  background:rgba(10,5,0,.97);backdrop-filter:blur(12px);
+  overflow-y:auto;padding:30px 4%;
+}
+.ap-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:32px;padding-bottom:18px;border-bottom:1px solid rgba(232,168,76,.2)}
+.ap-header h1{font-family:'Playfair Display',serif;color:var(--gold);font-size:1.8rem}
+.ap-close{background:rgba(192,57,43,.2);border:1px solid rgba(192,57,43,.4);color:#ff7675;width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:1.2rem;transition:all .25s}
+.ap-close:hover{background:var(--red);color:#fff}
+.ap-tabs{display:flex;gap:10px;margin-bottom:28px;flex-wrap:wrap}
+.ap-tab{padding:10px 22px;border-radius:25px;cursor:pointer;font-family:'Outfit',sans-serif;font-size:.88rem;font-weight:600;border:1.5px solid rgba(232,168,76,.25);color:var(--gold);background:transparent;transition:all .25s}
+.ap-tab.on,.ap-tab:hover{background:var(--gold);color:var(--espresso);border-color:var(--gold)}
+.ap-sec{display:none}
+.ap-sec.on{display:block}
+
+/* ADMIN — ADD MENU */
+.add-form{background:rgba(255,255,255,.04);border:1px solid rgba(232,168,76,.15);border-radius:18px;padding:32px;margin-bottom:32px}
+.add-form h3{font-family:'Playfair Display',serif;color:var(--cream);font-size:1.2rem;margin-bottom:22px}
+.af-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.af-grid.three{grid-template-columns:1fr 1fr 1fr}
+.af .fg{margin-bottom:0}
+.af .fg label{color:rgba(245,230,200,.7);font-size:.78rem;letter-spacing:.8px;text-transform:uppercase;display:block;margin-bottom:6px;font-weight:600}
+.af input,.af select,.af textarea{
+  width:100%;padding:11px 14px;background:rgba(255,255,255,.07);border:1px solid rgba(232,168,76,.18);
+  border-radius:8px;color:var(--cream);font-family:'Outfit',sans-serif;font-size:.92rem;outline:none;transition:border .2s;
+}
+.af input:focus,.af select:focus,.af textarea:focus{border-color:var(--gold)}
+.af select option{background:#1a0a00;color:var(--cream)}
+.af textarea{resize:vertical;min-height:80px}
+
+/* PHOTO UPLOAD */
+.upload-zone{
+  border:2px dashed rgba(232,168,76,.3);border-radius:12px;padding:32px;text-align:center;
+  cursor:pointer;transition:all .3s;background:rgba(255,255,255,.03);
+}
+.upload-zone:hover,.upload-zone.drag{border-color:var(--gold);background:rgba(232,168,76,.05)}
+.upload-zone .uz-icon{font-size:2.8rem;margin-bottom:12px}
+.upload-zone p{color:rgba(245,230,200,.5);font-size:.88rem;line-height:1.7}
+.upload-zone strong{color:var(--gold)}
+.upload-zone input[type=file]{display:none}
+.preview-img{width:100%;height:160px;object-fit:cover;border-radius:10px;margin-top:14px;display:none}
+
+.btn-add{
+  padding:12px 28px;background:var(--green);color:#fff;border:none;border-radius:10px;
+  font-family:'Outfit',sans-serif;font-size:.92rem;font-weight:700;cursor:pointer;
+  transition:all .25s;margin-top:18px;letter-spacing:.5px;
+}
+.btn-add:hover{background:#219a52;transform:translateY(-1px)}
+
+/* ADMIN MENU LIST */
+.admin-menu-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:18px}
+.admin-item{background:rgba(255,255,255,.04);border:1px solid rgba(232,168,76,.12);border-radius:14px;overflow:hidden}
+.ai-img{height:140px;display:flex;align-items:center;justify-content:center;font-size:3rem;background:rgba(255,255,255,.05);position:relative;overflow:hidden}
+.ai-img img{width:100%;height:100%;object-fit:cover;position:absolute;inset:0}
+.ai-body{padding:14px 16px 16px}
+.ai-body h4{font-family:'Playfair Display',serif;color:var(--cream);font-size:1rem;margin-bottom:3px}
+.ai-body .ai-cat{font-size:.72rem;color:var(--gold);text-transform:uppercase;letter-spacing:1px;margin-bottom:4px}
+.ai-body .ai-price{font-family:'Playfair Display',serif;color:var(--caramel);font-size:1.05rem;font-weight:900;margin-bottom:10px}
+.ai-body p{font-size:.78rem;color:rgba(245,230,200,.45);line-height:1.5;margin-bottom:12px}
+.ai-actions{display:flex;gap:8px}
+.btn-edit{padding:6px 14px;background:rgba(232,168,76,.15);color:var(--gold);border:1px solid rgba(232,168,76,.3);border-radius:8px;font-size:.78rem;font-weight:600;cursor:pointer;transition:all .2s;font-family:'Outfit',sans-serif}
+.btn-edit:hover{background:var(--gold);color:var(--espresso)}
+.btn-del{padding:6px 14px;background:rgba(192,57,43,.15);color:#ff7675;border:1px solid rgba(192,57,43,.3);border-radius:8px;font-size:.78rem;font-weight:600;cursor:pointer;transition:all .2s;font-family:'Outfit',sans-serif}
+.btn-del:hover{background:var(--red);color:#fff}
+
+/* ADMIN STATS */
+.stats-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:16px;margin-bottom:28px}
+.stat-box{background:rgba(255,255,255,.04);border:1px solid rgba(232,168,76,.15);border-radius:14px;padding:20px;text-align:center}
+.stat-box .sn{font-family:'Playfair Display',serif;font-size:2rem;color:var(--gold)}
+.stat-box .sl{font-size:.78rem;color:rgba(245,230,200,.5);letter-spacing:1px;text-transform:uppercase;margin-top:4px}
+
+/* TOAST */
+#toast{
+  position:fixed;bottom:28px;right:28px;z-index:9999;
+  background:var(--espresso);color:var(--cream);
+  padding:14px 22px;border-radius:12px;font-size:.88rem;
+  border-left:4px solid var(--gold);box-shadow:0 8px 30px rgba(0,0,0,.4);
+  transform:translateX(130%);transition:transform .4s cubic-bezier(.175,.885,.32,1.275);
+  max-width:320px;
+}
+#toast.show{transform:translateX(0)}
+
+/* REVEAL */
+.rev{opacity:0;transform:translateY(28px);transition:all .65s ease}
+.rev.vis{opacity:1;transform:translateY(0)}
+
+/* EDIT MODAL */
+#edit-modal{
+  display:none;position:fixed;inset:0;z-index:9000;
+  background:rgba(0,0,0,.85);backdrop-filter:blur(8px);
+  align-items:center;justify-content:center;padding:20px;
+}
+#edit-modal.show{display:flex}
+.em-box{
+  background:#1e0e03;border:1px solid rgba(232,168,76,.25);border-radius:20px;
+  padding:36px;width:100%;max-width:500px;max-height:90vh;overflow-y:auto;
+}
+.em-box h3{font-family:'Playfair Display',serif;color:var(--gold);font-size:1.3rem;margin-bottom:22px}
+.em-box .fg{margin-bottom:14px}
+.em-box .fg label{color:rgba(245,230,200,.7);font-size:.78rem;letter-spacing:.8px;text-transform:uppercase;display:block;margin-bottom:6px;font-weight:600}
+.em-box input,.em-box select,.em-box textarea{
+  width:100%;padding:11px 14px;background:rgba(255,255,255,.07);border:1px solid rgba(232,168,76,.18);
+  border-radius:8px;color:var(--cream);font-family:'Outfit',sans-serif;font-size:.92rem;outline:none;
+}
+.em-box select option{background:#1a0a00}
+.em-box textarea{resize:vertical;min-height:70px}
+.em-actions{display:flex;gap:12px;margin-top:18px}
+.btn-save{flex:1;padding:12px;background:var(--green);color:#fff;border:none;border-radius:10px;font-family:'Outfit',sans-serif;font-size:.92rem;font-weight:700;cursor:pointer;transition:all .25s}
+.btn-save:hover{background:#219a52}
+.btn-cancel{flex:1;padding:12px;background:rgba(255,255,255,.07);color:var(--cream);border:1px solid rgba(255,255,255,.15);border-radius:10px;font-family:'Outfit',sans-serif;font-size:.92rem;cursor:pointer;transition:all .25s}
+.btn-cancel:hover{background:rgba(255,255,255,.12)}
+
+/* RESPONSIVE */
+@media(max-width:900px){
+  #about{grid-template-columns:1fr}
+  .fg-grid{grid-template-columns:1fr;gap:28px}
+  .live-pulse{display:none}
+  .frow,.af-grid,.af-grid.three{grid-template-columns:1fr}
+}
+@media(max-width:700px){
+  .nav-links,.nav-cta{display:none}
+  nav{padding:0 5%}
+  section{padding:66px 5%}
+  .bform{padding:28px 20px}
+  .add-form{padding:24px 18px}
+  .hero-stats{gap:24px}
+}
+</style>
+</head>
+<body>
+
+<!-- ══════════ LOGIN ══════════ -->
+<div id="login-overlay">
+  <div class="login-box">
+    <img src="logo.png" alt="Dik's Cafe Logo" class="login-logo-img">
+    <div class="login-logo">Dik's</div>
+    <div class="login-sub">Coffee & Live Space · Wamena</div>
+    <h2>Selamat Datang 👋</h2>
+    <p style="color:rgba(92,58,30,0.7);margin-bottom:24px;font-size:0.95rem">Silakan pilih cara masuk ke website Dik's Cafe</p>
+    
+    <!-- Guest Entry -->
+    <div id="guest-section">
+      <button class="btn-login" onclick="guestIn()">Masuk Sebagai Tamu →</button>
+      <button class="guest-btn" onclick="showAdminLogin()">Login Admin</button>
+    </div>
+    
+    <!-- Admin Login (Hidden by default) -->
+    <div id="admin-section" style="display:none">
+      <div class="fg">
+        <label>Username</label>
+        <input type="text" id="lu" placeholder="Masukkan username"/>
+      </div>
+      <div class="fg">
+        <label>Password</label>
+        <input type="password" id="lp" placeholder="Masukkan password"/>
+      </div>
+      <button class="btn-login" onclick="doLogin()">Masuk Admin →</button>
+      <button class="guest-btn" onclick="showGuestLogin()">← Kembali</button>
+      <p class="login-hint">Admin: <b>owner/diks@2019</b> &nbsp;|&nbsp; Staff: <b>admin/diks123</b></p>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ NAV ══════════ -->
+<nav id="nav">
+  <a href="#hero" class="nav-brand">
+    <img src="logo.png" alt="Dik's Cafe Logo" class="nav-logo">
+    <span class="nav-brand-text">Dik's</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#about">Tentang</a></li>
+    <li><a href="#menu">Menu</a></li>
+    <li><a href="#live">Live Musik</a></li>
+    <li><a href="#booking">Reservasi</a></li>
+  </ul>
+  <div class="nav-right">
+    <span id="admin-btn-nav" class="admin-btn" onclick="openAdmin()">⚙ Panel Admin</span>
+    <a href="#booking" class="nav-cta">Pesan Sekarang</a>
+  </div>
+</nav>
+
+<!-- ══════════ HERO ══════════ -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <div class="hero-badge">♪ Live Musik Setiap Malam</div>
+    <h1 class="hero-title">Kopi Blend <em>Toraja</em><br/>& Wamena Terbaik</h1>
+    <p class="hero-desc">Nikmati suasana hangat Dik's Cafe — cita rasa kopi asli Papua Pegunungan berpadu alunan musik live yang memanjakan jiwa setiap malam di jantung Wamena.</p>
+    <div class="hero-actions">
+      <a href="#menu" class="btn-primary">Lihat Menu Digital</a>
+      <a href="#booking" class="btn-sec">Buat Reservasi</a>
+    </div>
+    <div class="hero-stats">
+      <div class="hstat"><h3>2019</h3><p>Berdiri Sejak</p></div>
+      <div class="hstat"><h3 id="menu-count">50+</h3><p>Pilihan Menu</p></div>
+      <div class="hstat"><h3>7 Hari</h3><p>Buka Seminggu</p></div>
+    </div>
+  </div>
+  <div class="live-pulse">
+    <p class="lp-label">Signature Blend</p>
+    <h3 class="lp-name">Toraja × Wamena</h3>
+    <p class="lp-sub">Perpaduan kopi nusantara terbaik</p>
+    <div class="wave"><span></span><span></span><span></span><span></span><span></span></div>
+    <div class="live-tag"><div class="ldot"></div>Live Musik Malam Ini</div>
+  </div>
+</section>
+
+<!-- ══════════ ABOUT ══════════ -->
+<section id="about">
+  <div class="rev">
+    <p class="stag">Tentang Dik's Cafe</p>
+    <h2 class="stitle">Lebih dari Sekadar <em>Tempat Ngopi</em></h2>
+    <p class="sdesc">Dik's Cafe hadir sejak 2019 sebagai ruang ketiga yang menyatukan cita rasa autentik kopi lokal, kehangatan kuliner berat khas Nusantara, dan semangat musik live yang menghidupkan malam di Wamena. Rumah bagi semua.</p>
+    <div class="feat-pills">
+      <div class="fpill">☕ Kopi Blend Premium</div>
+      <div class="fpill">🎵 Live Musik Harian</div>
+      <div class="fpill">🍖 Masakan Berat</div>
+      <div class="fpill">🎧 DJ Malam Minggu</div>
+      <div class="fpill">📶 WiFi Cepat</div>
+      <div class="fpill">👨‍👩‍👧 Family Friendly</div>
+    </div>
+  </div>
+  <div class="rev" style="transition-delay:.2s">
+    <div class="info-card">
+      <div class="since-badge"><strong>Since</strong>2019<strong>WMX</strong></div>
+      <div class="loc">
+        <span style="font-size:1.5rem;margin-top:2px">📍</span>
+        <div class="loc-t">
+          <p>Lokasi Kami</p>
+          <p>Jln. Gatot Subroto No. 99, Wamena<br/>Kab. Jayawijaya, Papua Pegunungan</p>
+        </div>
+      </div>
+      <p class="jhdr">⏰ Jam Operasional</p>
+      <div class="jrow"><span>Senin – Kamis</span><span>10:00 – 22:00 WIT</span></div>
+      <div class="jrow"><span>Jumat – Sabtu</span><span>10:00 – 23:00 WIT</span></div>
+      <div class="jrow"><span>Minggu</span><span>10:00 – 22:00 WIT</span></div>
+      <div class="jrow"><span>Status</span><span style="color:#4ade80">● Buka Setiap Hari</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ MENU DIGITAL ══════════ -->
+<section id="menu">
+  <div class="menu-top rev">
+    <div>
+      <p class="stag">Menu Digital</p>
+      <h2 class="stitle">Buku Menu <em>Dik's Cafe</em></h2>
+    </div>
+    <div class="tabs" id="menu-tabs"></div>
+  </div>
+  <div id="menu-content" class="rev" style="transition-delay:.15s"></div>
+</section>
+
+<!-- ══════════ LIVE MUSIK ══════════ -->
+<section id="live">
+  <p class="stag">Jadwal Hiburan</p>
+  <h2 class="stitle">Live Musik <em>Dik's Band</em></h2>
+  <p style="text-align:center;color:rgba(245,230,200,.55);margin-top:10px;font-size:.9rem">Setiap malam ada live music dari Dik's Band — band in-house kami yang selalu menghibur</p>
+  <div class="sched rev">
+    <div class="sday"><div style="font-size:2rem">🎸</div><div class="dn">Senin</div><div class="de">Dik's Band Acoustic<br/>19:00 WIT</div></div>
+    <div class="sday"><div style="font-size:2rem">🎶</div><div class="dn">Selasa</div><div class="de">Dik's Band Acoustic<br/>19:00 WIT</div></div>
+    <div class="sday"><div style="font-size:2rem">🎵</div><div class="dn">Rabu</div><div class="de">Dik's Band Live<br/>19:00 WIT</div></div>
+    <div class="sday"><div style="font-size:2rem">🎼</div><div class="dn">Kamis</div><div class="de">Dik's Band Full<br/>19:00 WIT</div></div>
+    <div class="sday hi"><div style="font-size:2rem">🎤</div><div class="dn">Jumat</div><div class="de">Dik's Band Special<br/>20:00 – 23:00 WIT</div><div class="djbadge">SPECIAL NIGHT</div></div>
+    <div class="sday sp"><div style="font-size:2rem">🎧</div><div class="dn">Sabtu</div><div class="de">Dik's Band + DJ<br/>20:00 – 23:00 WIT</div><div class="djbadge">DJ NIGHT ✨</div></div>
+    <div class="sday hi"><div style="font-size:2rem">🎸</div><div class="dn">Minggu</div><div class="de">Dik's Band Full Show<br/>18:00 WIT</div></div>
+  </div>
+</section>
+
+<!-- ══════════ BOOKING ══════════ -->
+<section id="booking">
+  <p class="stag">Buat Reservasi</p>
+  <h2 class="stitle">Pesan Meja <em>Sekarang</em></h2>
+  <p class="sdesc">Pastikan pengalaman terbaik Anda dengan melakukan reservasi terlebih dahulu.</p>
+  <div class="bform rev">
+    <div class="frow">
+      <div class="fg"><label>Nama Lengkap</label><input type="text" id="bn" placeholder="Nama Anda"/></div>
+      <div class="fg"><label>No. WhatsApp</label><input type="tel" id="bp" placeholder="08xxxxxxxxxx"/></div>
+    </div>
+    <div class="frow">
+      <div class="fg"><label>Tanggal</label><input type="date" id="bd"/></div>
+      <div class="fg"><label>Waktu</label><input type="time" id="bt" min="10:00" max="23:00"/></div>
+    </div>
+    <div class="frow">
+      <div class="fg"><label>Jumlah Tamu</label>
+        <select id="bg"><option>1–2 orang</option><option>3–5 orang</option><option>6–10 orang</option><option>10+ (Event)</option></select>
+      </div>
+      <div class="fg"><label>Pilih Paket</label>
+        <select id="bpk"><option>A la Carte</option><option>Coffee Lover Package</option><option>Couple Date Night</option><option>Family Feast</option><option>Birthday Celebration</option><option>Private Event</option></select>
+      </div>
+    </div>
+    <div class="fg"><label>Catatan</label><textarea id="bnote" placeholder="Permintaan khusus..."></textarea></div>
+    <button class="btn-book" onclick="submitBooking()">Konfirmasi Reservasi ✓</button>
+  </div>
+</section>
+
+<!-- ══════════ FOOTER ══════════ -->
+<footer>
+  <div class="fg-grid">
+    <div>
+      <div class="fb">Dik's</div>
+      <p class="ftag">Coffee & Live Space — Tempat cita rasa kopi autentik Papua Pegunungan bertemu kehangatan kebersamaan dan alunan musik tak terlupakan di Wamena.</p>
+      <div class="socials" style="margin-top:22px">
+        <a href="#" class="soc">📘</a><a href="#" class="soc">📷</a>
+        <a href="#" class="soc">🎵</a><a href="#" class="soc">💬</a>
+      </div>
+    </div>
+    <div class="fc"><h4>Navigasi</h4><ul>
+      <li><a href="#about">Tentang Kami</a></li><li><a href="#menu">Menu Digital</a></li>
+      <li><a href="#live">Live Musik</a></li><li><a href="#booking">Reservasi</a></li>
+    </ul></div>
+    <div class="fc"><h4>Info Cafe</h4><ul>
+      <li><a href="#">📍 Jln. Gatot Subroto No.99</a></li>
+      <li><a href="#">🏙 Wamena, Papua Pegunungan</a></li>
+      <li><a href="#">⏰ Buka 10:00–22:00 WIT</a></li>
+      <li><a href="#">📞 Hubungi Kami</a></li>
+    </ul></div>
+  </div>
+  <div class="fbot">
+    <span>© 2025 Dik's Cafe – Coffee & Live Space. Wamena.</span>
+    <span style="color:var(--gold)">Crafted with ☕ & ♥</span>
+  </div>
+</footer>
+
+<!-- ══════════ ADMIN PANEL ══════════ -->
+<div id="admin-panel">
+  <div class="ap-header">
+    <h1>⚙ Panel Admin Dik's Cafe</h1>
+    <div class="ap-close" onclick="closeAdmin()">✕</div>
+  </div>
+
+  <div class="ap-tabs">
+    <button class="ap-tab on" onclick="apTab('dashboard')">📊 Dashboard</button>
+    <button class="ap-tab" onclick="apTab('add')">➕ Tambah Menu</button>
+    <button class="ap-tab" onclick="apTab('manage')">📋 Kelola Menu</button>
+    <button class="ap-tab" onclick="apTab('info')">ℹ️ Info Cafe</button>
+  </div>
+
+  <!-- DASHBOARD -->
+  <div class="ap-sec on" id="ap-dashboard">
+    <div class="stats-row" id="ap-stats"></div>
+    <div style="color:rgba(245,230,200,.6);font-size:.9rem;line-height:1.9">
+      <p>👋 Selamat datang di Panel Admin <strong style="color:var(--gold)">Dik's Cafe</strong>.</p>
+      <p style="margin-top:8px">Dari sini Anda bisa: <strong style="color:var(--gold)">tambah menu baru</strong> lengkap dengan foto, <strong style="color:var(--gold)">kelola & hapus</strong> menu yang ada, serta <strong style="color:var(--gold)">update info cafe</strong>. Semua perubahan langsung tampil di halaman utama website.</p>
+    </div>
+  </div>
+
+  <!-- ADD MENU -->
+  <div class="ap-sec" id="ap-add">
+    <div class="add-form af">
+      <h3>➕ Tambah Menu Baru</h3>
+      <div class="af-grid">
+        <div class="fg"><label>Nama Menu *</label><input type="text" id="af-name" placeholder="Contoh: Es Kopi Susu"/></div>
+        <div class="fg"><label>Kategori *</label>
+          <select id="af-cat">
+            <option value="kopi">☕ Kopi</option>
+            <option value="makanan">🍖 Makanan</option>
+            <option value="minuman">🥤 Minuman</option>
+            <option value="paket">📦 Paket</option>
+          </select>
+        </div>
+      </div>
+      <div class="af-grid three" style="margin-top:14px">
+        <div class="fg"><label>Harga (Rp) *</label><input type="number" id="af-price" placeholder="25000"/></div>
+        <div class="fg"><label>Label Badge</label><input type="text" id="af-badge" placeholder="BEST SELLER / SPESIAL"/></div>
+        <div class="fg"><label>Emoji Ikon</label><input type="text" id="af-emoji" placeholder="☕ / 🍖 / 🥤" value="☕"/></div>
+      </div>
+      <div class="fg" style="margin-top:14px"><label>Deskripsi Menu</label>
+        <textarea id="af-desc" placeholder="Ceritakan kelezatan menu ini dalam 1–2 kalimat..."></textarea>
+      </div>
+      <div class="fg" style="margin-top:14px">
+        <label>Foto Menu (Upload dari HP/PC)</label>
+        <div class="upload-zone" id="upload-zone" onclick="document.getElementById('af-photo').click()" ondrop="handleDrop(event)" ondragover="event.preventDefault();this.classList.add('drag')" ondragleave="this.classList.remove('drag')">
+          <input type="file" id="af-photo" accept="image/*" onchange="handlePhoto(this)"/>
+          <div class="uz-icon">📸</div>
+          <p>Klik atau <strong>drag & drop</strong> foto menu di sini<br/><span style="font-size:.78rem;color:rgba(245,230,200,.35)">JPG, PNG, WEBP · Max 5MB</span></p>
+        </div>
+        <img id="photo-preview" class="preview-img" alt="Preview foto menu"/>
+      </div>
+      <button class="btn-add" onclick="addMenuItem()">✓ Simpan Menu ke Website</button>
+    </div>
+  </div>
+
+  <!-- MANAGE -->
+  <div class="ap-sec" id="ap-manage">
+    <div style="display:flex;gap:10px;margin-bottom:22px;flex-wrap:wrap">
+      <button class="tab" style="background:var(--red);color:#fff;border-color:var(--red)" onclick="filterAdmin('all');event.target.classList.add('on')">Semua</button>
+      <button class="tab" onclick="filterAdmin('kopi')">☕ Kopi</button>
+      <button class="tab" onclick="filterAdmin('makanan')">🍖 Makanan</button>
+      <button class="tab" onclick="filterAdmin('minuman')">🥤 Minuman</button>
+      <button class="tab" onclick="filterAdmin('paket')">📦 Paket</button>
+    </div>
+    <div class="admin-menu-list" id="admin-list"></div>
+  </div>
+
+  <!-- INFO CAFE -->
+  <div class="ap-sec af" id="ap-info">
+    <div class="add-form">
+      <h3>ℹ️ Update Info Cafe</h3>
+      <div class="af-grid">
+        <div class="fg"><label>Nama Cafe</label><input type="text" id="ci-name" value="Dik's Cafe"/></div>
+        <div class="fg"><label>Tagline</label><input type="text" id="ci-tag" value="Coffee & Live Space"/></div>
+      </div>
+      <div class="fg" style="margin-top:14px"><label>Alamat Lengkap</label>
+        <input type="text" id="ci-addr" value="Jln. Gatot Subroto No. 99, Wamena, Kab. Jayawijaya, Papua Pegunungan"/>
+      </div>
+      <div class="af-grid" style="margin-top:14px">
+        <div class="fg"><label>Jam Buka (Sen–Kam)</label><input type="text" id="ci-h1" value="10:00 – 22:00 WIT"/></div>
+        <div class="fg"><label>Jam Buka (Jum–Sab)</label><input type="text" id="ci-h2" value="10:00 – 23:00 WIT"/></div>
+      </div>
+      <div class="fg" style="margin-top:14px"><label>Nomor WhatsApp / Telepon</label>
+        <input type="text" id="ci-phone" placeholder="+62 xxx xxxx xxxx"/>
+      </div>
+      <div class="fg" style="margin-top:14px"><label>Pengumuman / Promo Terkini</label>
+        <textarea id="ci-promo" placeholder="Contoh: Promo 2x1 setiap Rabu untuk kopi signature!"></textarea>
+      </div>
+      <button class="btn-add" onclick="saveCafeInfo()">✓ Simpan Perubahan Info Cafe</button>
+    </div>
+  </div>
+</div>
+
+<!-- EDIT MODAL -->
+<div id="edit-modal">
+  <div class="em-box af">
+    <h3>✏️ Edit Menu</h3>
+    <input type="hidden" id="em-id"/>
+    <div class="fg"><label>Nama Menu</label><input type="text" id="em-name"/></div>
+    <div class="fg"><label>Kategori</label>
+      <select id="em-cat">
+        <option value="kopi">☕ Kopi</option><option value="makanan">🍖 Makanan</option>
+        <option value="minuman">🥤 Minuman</option><option value="paket">📦 Paket</option>
+      </select>
+    </div>
+    <div class="fg"><label>Harga (Rp)</label><input type="number" id="em-price"/></div>
+    <div class="fg"><label>Emoji Ikon</label><input type="text" id="em-emoji"/></div>
+    <div class="fg"><label>Label Badge</label><input type="text" id="em-badge" placeholder="SPESIAL / kosongkan jika tidak ada"/></div>
+    <div class="fg"><label>Deskripsi</label><textarea id="em-desc"></textarea></div>
+    <div class="fg">
+      <label>Foto Menu (Ganti Logo)</label>
+      <div class="upload-zone" onclick="document.getElementById('em-photo').click()">
+        <input type="file" id="em-photo" accept="image/*" onchange="handleEditPhoto(this)"/>
+        <div class="uz-icon">🖼️</div>
+        <p>Klik untuk upload <strong>logo baru</strong><br/><span style="font-size:.78rem;color:rgba(245,230,200,.35)">JPG, PNG · Max 5MB</span></p>
+      </div>
+      <img id="em-photo-preview" class="preview-img" alt="Preview logo" style="display:none"/>
+    </div>
+    <div class="em-actions">
+      <button class="btn-save" onclick="saveEdit()">✓ Simpan</button>
+      <button class="btn-cancel" onclick="closeEdit()">✕ Batal</button>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div id="toast"></div>
+
+<script>
+// ══════════ DATA STORAGE ══════════
+const DEFAULT_MENU = [
+  {id:1,name:'Toraja × Wamena Blend',cat:'kopi',price:28000,desc:'Perpaduan eksklusif kopi Toraja dan kopi pegunungan Wamena, body tebal, aroma kayu manis alami.',emoji:'☕',badge:'SPESIAL',photo:''},
+  {id:2,name:'Kopi Wamena Single Origin',cat:'kopi',price:25000,desc:'Kopi murni dari kebun di pegunungan Jayawijaya, dipetik langsung dari petani lokal.',emoji:'☕',badge:'',photo:''},
+  {id:3,name:'Cappuccino Dik\'s',cat:'kopi',price:32000,desc:'Espresso blend premium dipadukan susu segar, foam lembut, latte art khas barista kami.',emoji:'☕',badge:'',photo:''},
+  {id:4,name:'Kopi Susu Es Khas Dik\'s',cat:'kopi',price:22000,desc:'Es kopi susu dengan kadar gula pas, blend Wamena yang kuat dan menyegarkan.',emoji:'🥛',badge:'',photo:''},
+  {id:5,name:'Sop Iga Spesial',cat:'makanan',price:75000,desc:'Iga sapi pilihan direbus perlahan, kuah bening gurih kaya rempah khas nusantara.',emoji:'🍖',badge:'BEST SELLER',photo:''},
+  {id:6,name:'Iga Bakar Dik\'s',cat:'makanan',price:85000,desc:'Iga sapi bakar bumbu kacang spesial, kecap manis, rempah pilihan, sambal matah.',emoji:'🥩',badge:'',photo:''},
+  {id:7,name:'Ayam Penyet Sambal Bawang',cat:'makanan',price:45000,desc:'Ayam goreng tepung dipenyet, sambal bawang pedas menyengat, lalapan segar.',emoji:'🍗',badge:'',photo:''},
+  {id:8,name:'Ayam Bakar Madu',cat:'makanan',price:55000,desc:'Ayam kampung pilihan, marinasi madu asli dan rempah, dibakar sempurna.',emoji:'🍗',badge:'',photo:''},
+  {id:9,name:'Mocktail Tropis',cat:'minuman',price:30000,desc:'Jus mangga, sirup passion fruit, dan soda menyegarkan — mocktail signature Dik\'s Cafe.',emoji:'🍹',badge:'FAVORIT',photo:''},
+  {id:10,name:'Dum-Dum Taro Lychee',cat:'minuman',price:28000,desc:'Minuman kekinian rasa taro dan lychee, segar dengan popping boba di dalamnya.',emoji:'🧋',badge:'',photo:''},
+  {id:11,name:'Jus Alpukat Krim',cat:'minuman',price:25000,desc:'Alpukat segar blended dengan susu, madu, dan es, tekstur creamy yang mengenyangkan.',emoji:'🥑',badge:'',photo:''},
+  {id:12,name:'Mocktail Berry Blast',cat:'minuman',price:32000,desc:'Stroberi, blueberry, grenadine dan sprite — merah cerah dan instagramable.',emoji:'🍓',badge:'',photo:''},
+  {id:13,name:'Paket Couple Date Night',cat:'paket',price:95000,desc:'2 Kopi Blend Signature + 2 Snack + 1 Mocktail Couple — malam romantis bersama pasangan.',emoji:'💑',badge:'HEMAT',photo:''},
+  {id:14,name:'Paket Family Feast',cat:'paket',price:280000,desc:'1 Sop Iga + 1 Iga Bakar + 4 Nasi + 4 Minuman Pilihan — momen bersama keluarga.',emoji:'👨‍👩‍👧‍👦',badge:'',photo:''},
+];
+
+function getMenu(){
+  const saved = localStorage.getItem('diks_menu');
+  return saved ? JSON.parse(saved) : DEFAULT_MENU;
+}
+function saveMenu(data){ localStorage.setItem('diks_menu',JSON.stringify(data)); }
+function nextId(){ const m=getMenu(); return m.length>0?Math.max(...m.map(x=>x.id))+1:1; }
+
+// ══════════ LOGIN ══════════
+let currentRole = 'guest';
+const ACCOUNTS = { 'owner':'diks@2019', 'admin':'diks123', 'tamu':'1234' };
+
+function doLogin(){
+  const u=document.getElementById('lu').value.trim();
+  const p=document.getElementById('lp').value.trim();
+  if(!u||!p){toast('⚠️ Isi username dan password dulu','warn');return;}
+  if(ACCOUNTS[u]&&ACCOUNTS[u]===p){
+    currentRole=u;
+    document.getElementById('login-overlay').style.display='none';
+    if(u==='owner'||u==='admin') document.getElementById('admin-btn-nav').style.display='inline-flex';
+    toast('👋 Selamat datang, '+u+'! Nikmati Dik\'s Cafe.');
+    renderMenu(); updateStats();
+  } else { toast('❌ Username atau password salah','error'); }
+}
+function guestIn(){
+  currentRole='guest';
+  document.getElementById('login-overlay').style.display='none';
+  toast('🙌 Masuk sebagai Tamu — Selamat menikmati menu kami!');
+  renderMenu(); updateStats();
+}
+function showAdminLogin(){
+  document.getElementById('guest-section').style.display='none';
+  document.getElementById('admin-section').style.display='block';
+}
+function showGuestLogin(){
+  document.getElementById('guest-section').style.display='block';
+  document.getElementById('admin-section').style.display='none';
+}
+document.getElementById('lp').addEventListener('keydown',e=>{ if(e.key==='Enter') doLogin(); });
+
+// ══════════ MENU RENDER ══════════
+const CATS = [{id:'kopi',label:'☕ Kopi'},{id:'makanan',label:'🍖 Makanan'},{id:'minuman',label:'🥤 Minuman'},{id:'paket',label:'📦 Paket'}];
+let activeCat = 'kopi';
+
+function renderMenu(){
+  const menu = getMenu();
+  // Tabs
+  const tabsEl = document.getElementById('menu-tabs');
+  tabsEl.innerHTML = CATS.map(c=>`<button class="tab ${c.id===activeCat?'on':''}" onclick="switchCat('${c.id}')">${c.label}</button>`).join('');
+  // Content
+  const content = document.getElementById('menu-content');
+  const items = menu.filter(m=>m.cat===activeCat);
+  if(items.length===0){
+    content.innerHTML=`<div style="text-align:center;padding:60px 20px;color:var(--light)"><div style="font-size:3rem;margin-bottom:14px">🍽️</div><p>Belum ada menu di kategori ini.<br/>${(currentRole==='owner'||currentRole==='admin')?'<span style="color:var(--caramel)">Tambahkan lewat Panel Admin →</span>':''}</p></div>`;
+    return;
+  }
+  content.innerHTML = items.map(item=>`
+    <div class="mcard">
+      <div class="mimg" style="background:${getBg(item.cat)}">
+        ${item.photo?`<img src="${item.photo}" alt="${item.name}"/>`:''}
+        <span class="emoji-fallback">${item.emoji||'☕'}</span>
+        ${item.badge?`<span class="mbadge">${item.badge}</span>`:''}
+      </div>
+      <div class="mbody">
+        <h3>${item.name}</h3>
+        <p>${item.desc}</p>
+        <div class="mfoot">
+          <span class="mprice">Rp ${item.price.toLocaleString('id-ID')}</span>
+          <button class="border" onclick="addOrder('${item.name.replace(/'/g,"\\'")}')">+ Pesan</button>
+        </div>
+      </div>
+    </div>`).join('');
+  document.getElementById('menu-count').textContent = menu.length+'+';
+}
+
+function switchCat(cat){ activeCat=cat; renderMenu(); }
+function getBg(cat){
+  const bgs={kopi:'linear-gradient(135deg,#3d1f07,#1a0a00)',makanan:'linear-gradient(135deg,#4a1a0a,#2e0a03)',minuman:'linear-gradient(135deg,#0a2e4a,#051a2e)',paket:'linear-gradient(135deg,#c0392b,#a93226)'};
+  return bgs[cat]||bgs.kopi;
+}
+
+// ══════════ ADMIN PANEL ══════════
+function openAdmin(){
+  if(currentRole!=='owner'&&currentRole!=='admin'){toast('⚠️ Hanya admin yang bisa akses panel ini','warn');return;}
+  document.getElementById('admin-panel').style.display='block';
+  document.body.style.overflow='hidden';
+  renderAdminList(); updateStats();
+}
+function closeAdmin(){
+  document.getElementById('admin-panel').style.display='none';
+  document.body.style.overflow='';
+  renderMenu();
+}
+
+function apTab(tab){
+  document.querySelectorAll('.ap-sec').forEach(s=>s.classList.remove('on'));
+  document.querySelectorAll('.ap-tab').forEach(b=>b.classList.remove('on'));
+  document.getElementById('ap-'+tab).classList.add('on');
+  event.target.classList.add('on');
+  if(tab==='manage') renderAdminList();
+  if(tab==='dashboard') updateStats();
+}
+
+function updateStats(){
+  const menu=getMenu();
+  const el=document.getElementById('ap-stats');
+  if(!el) return;
+  el.innerHTML=`
+    <div class="stat-box"><div class="sn">${menu.length}</div><div class="sl">Total Menu</div></div>
+    <div class="stat-box"><div class="sn">${menu.filter(m=>m.cat==='kopi').length}</div><div class="sl">Menu Kopi</div></div>
+    <div class="stat-box"><div class="sn">${menu.filter(m=>m.cat==='makanan').length}</div><div class="sl">Menu Makanan</div></div>
+    <div class="stat-box"><div class="sn">${menu.filter(m=>m.cat==='minuman').length}</div><div class="sl">Menu Minuman</div></div>
+    <div class="stat-box"><div class="sn">${menu.filter(m=>m.cat==='paket').length}</div><div class="sl">Paket</div></div>
+  `;
+}
+
+// ══════════ PHOTO UPLOAD ══════════
+let currentPhotoData = '';
+function handlePhoto(input){
+  const file=input.files[0];
+  if(!file) return;
+  if(file.size>5*1024*1024){toast('❌ Ukuran foto maksimal 5MB','error');return;}
+  const reader=new FileReader();
+  reader.onload=e=>{
+    currentPhotoData=e.target.result;
+    const prev=document.getElementById('photo-preview');
+    prev.src=currentPhotoData;
+    prev.style.display='block';
+    document.querySelector('.uz-icon').textContent='✅';
+    document.querySelector('.upload-zone p').innerHTML='<strong style="color:var(--green)">Foto berhasil diupload!</strong><br/><span style="font-size:.78rem;color:rgba(245,230,200,.35)">Klik untuk ganti foto</span>';
+    toast('📸 Foto menu berhasil diupload!');
+  };
+  reader.readAsDataURL(file);
+}
+let editPhotoData='';
+function handleEditPhoto(input){
+  const file=input.files[0];
+  if(!file) return;
+  if(file.size>5*1024*1024){toast('❌ Ukuran foto maksimal 5MB','error');return;}
+  const reader=new FileReader();
+  reader.onload=e=>{
+    editPhotoData=e.target.result;
+    const prev=document.getElementById('em-photo-preview');
+    prev.src=editPhotoData;
+    prev.style.display='block';
+    toast('🖼️ Logo berhasil diupload!');
+  };
+  reader.readAsDataURL(file);
+}
+function handleDrop(e){
+  e.preventDefault();
+  document.getElementById('upload-zone').classList.remove('drag');
+  const file=e.dataTransfer.files[0];
+  if(file&&file.type.startsWith('image/')){
+    const input=document.getElementById('af-photo');
+    const dt=new DataTransfer();
+    dt.items.add(file);
+    input.files=dt.files;
+    handlePhoto(input);
+  }
+}
+
+// ══════════ ADD MENU ══════════
+function addMenuItem(){
+  const name=document.getElementById('af-name').value.trim();
+  const cat=document.getElementById('af-cat').value;
+  const price=parseInt(document.getElementById('af-price').value)||0;
+  const desc=document.getElementById('af-desc').value.trim();
+  const emoji=document.getElementById('af-emoji').value.trim()||'☕';
+  const badge=document.getElementById('af-badge').value.trim();
+  if(!name){toast('⚠️ Nama menu tidak boleh kosong','warn');return;}
+  if(!price){toast('⚠️ Harga tidak boleh kosong','warn');return;}
+  const menu=getMenu();
+  menu.push({id:nextId(),name,cat,price,desc,emoji,badge,photo:currentPhotoData});
+  saveMenu(menu);
+  // Reset form
+  document.getElementById('af-name').value='';
+  document.getElementById('af-price').value='';
+  document.getElementById('af-desc').value='';
+  document.getElementById('af-emoji').value='☕';
+  document.getElementById('af-badge').value='';
+  currentPhotoData='';
+  document.getElementById('photo-preview').style.display='none';
+  document.querySelector('.uz-icon').textContent='📸';
+  document.querySelector('.upload-zone p').innerHTML='Klik atau <strong>drag & drop</strong> foto menu di sini<br/><span style="font-size:.78rem;color:rgba(245,230,200,.35)">JPG, PNG, WEBP · Max 5MB</span>';
+  toast('✅ Menu "'+name+'" berhasil ditambahkan!');
+  updateStats(); renderAdminList(); renderMenu();
+}
+
+// ══════════ ADMIN LIST ══════════
+let adminFilter='all';
+function filterAdmin(cat){ adminFilter=cat; renderAdminList(); }
+function renderAdminList(){
+  const menu=getMenu().filter(m=>adminFilter==='all'||m.cat===adminFilter);
+  const el=document.getElementById('admin-list');
+  if(!el) return;
+  if(menu.length===0){el.innerHTML='<p style="color:rgba(245,230,200,.4);padding:20px">Tidak ada menu di kategori ini.</p>';return;}
+  el.innerHTML=menu.map(item=>`
+    <div class="admin-item">
+      <div class="ai-img" style="${item.photo?'':`background:${getBg(item.cat)}`}">
+        ${item.photo?`<img src="${item.photo}" alt="${item.name}"/>`:''}
+        ${!item.photo?`<span style="font-size:2.8rem;position:relative;z-index:1">${item.emoji}</span>`:''}
+      </div>
+      <div class="ai-body">
+        <div class="ai-cat">${CATS.find(c=>c.id===item.cat)?.label||item.cat}</div>
+        <h4>${item.name}</h4>
+        <div class="ai-price">Rp ${item.price.toLocaleString('id-ID')}</div>
+        <p>${item.desc||'—'}</p>
+        <div class="ai-actions">
+          <button class="btn-edit" onclick="openEdit(${item.id})">✏️ Edit</button>
+          <button class="btn-del" onclick="deleteItem(${item.id})">🗑 Hapus</button>
+        </div>
+      </div>
+    </div>`).join('');
+}
+
+// ══════════ DELETE ══════════
+function deleteItem(id){
+  if(!confirm('Yakin hapus menu ini?')) return;
+  let menu=getMenu().filter(m=>m.id!==id);
+  saveMenu(menu);
+  renderAdminList(); renderMenu(); updateStats();
+  toast('🗑 Menu berhasil dihapus');
+}
+
+// ══════════ EDIT ══════════
+function openEdit(id){
+  const item=getMenu().find(m=>m.id===id);
+  if(!item) return;
+  document.getElementById('em-id').value=id;
+  document.getElementById('em-name').value=item.name;
+  document.getElementById('em-cat').value=item.cat;
+  document.getElementById('em-price').value=item.price;
+  document.getElementById('em-emoji').value=item.emoji;
+  document.getElementById('em-badge').value=item.badge;
+  document.getElementById('em-desc').value=item.desc;
+  // Show existing photo if available
+  editPhotoData=item.photo||'';
+  const prev=document.getElementById('em-photo-preview');
+  if(editPhotoData){
+    prev.src=editPhotoData;
+    prev.style.display='block';
+  }else{
+    prev.style.display='none';
+  }
+  document.getElementById('edit-modal').classList.add('show');
+}
+function closeEdit(){ 
+  document.getElementById('edit-modal').classList.remove('show'); 
+  editPhotoData='';
+  document.getElementById('em-photo-preview').style.display='none';
+}
+function saveEdit(){
+  const id=parseInt(document.getElementById('em-id').value);
+  let menu=getMenu();
+  const idx=menu.findIndex(m=>m.id===id);
+  if(idx<0) return;
+  menu[idx]={
+    ...menu[idx],
+    name:document.getElementById('em-name').value.trim(),
+    cat:document.getElementById('em-cat').value,
+    price:parseInt(document.getElementById('em-price').value)||menu[idx].price,
+    emoji:document.getElementById('em-emoji').value.trim()||menu[idx].emoji,
+    badge:document.getElementById('em-badge').value.trim(),
+    desc:document.getElementById('em-desc').value.trim(),
+    photo:editPhotoData||menu[idx].photo, // Update photo jika ada yang baru
+  };
+  saveMenu(menu);
+  closeEdit(); renderAdminList(); renderMenu(); updateStats();
+  toast('✅ Menu berhasil diupdate!');
+}
+
+// ══════════ CAFE INFO ══════════
+function saveCafeInfo(){
+  toast('✅ Info cafe berhasil disimpan!');
+}
+
+// ══════════ ORDER / BOOKING ══════════
+const cart=[];
+function addOrder(name){ cart.push(name); toast('🛒 "'+name+'" ditambahkan ke pesanan!'); }
+function submitBooking(){
+  const n=document.getElementById('bn').value.trim();
+  const p=document.getElementById('bp').value.trim();
+  const d=document.getElementById('bd').value;
+  if(!n||!p||!d){toast('⚠️ Lengkapi nama, WhatsApp, dan tanggal','warn');return;}
+  toast('✅ Reservasi berhasil! Kami akan menghubungi '+n+' via WhatsApp segera.');
+  ['bn','bp','bd','bt','bnote'].forEach(id=>document.getElementById(id).value='');
+}
+
+// ══════════ TOAST ══════════
+let tt;
+function toast(msg,type){
+  const el=document.getElementById('toast');
+  el.textContent=msg;
+  el.style.borderLeftColor=type==='error'?'#c0392b':type==='warn'?'#f39c12':'var(--gold)';
+  el.classList.add('show');
+  clearTimeout(tt);
+  tt=setTimeout(()=>el.classList.remove('show'),3500);
+}
+
+// ══════════ NAV SCROLL ══════════
+window.addEventListener('scroll',()=>{
+  const nav=document.getElementById('nav');
+  nav.style.background=window.scrollY>50?'rgba(26,10,0,1)':'rgba(26,10,0,.95)';
+});
+
+// ══════════ SCROLL REVEAL ══════════
+const obs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('vis'); });
+},{threshold:.1});
+document.querySelectorAll('.rev').forEach(el=>obs.observe(el));
+
+// INIT
+renderMenu();
+</script>
+</body>
+</html>
